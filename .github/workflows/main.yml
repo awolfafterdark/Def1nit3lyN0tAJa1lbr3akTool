@@ -15,40 +15,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set up Xcode
-        uses: actions/setup-xcode@v1
-        with:
-          xcode-version: 'latest'
-
-      - name: Build jailbreakd
+      - name: Build Dependencies
         run: |
-          cd basebin/jailbreakd
-          make
-          cd -
-
-      - name: Build jbctl
-        run: |
-          cd basebin/jbctl
-          make
-          cd -
-
-      - name: Build jbinit
-        run: |
-          cd basebin/jbinit
-          make
-          cd -
-
-      - name: Build launchdhook
-        run: |
-          cd basebin/launchdhook
-          make
-          cd -
-
-      - name: Build systemhook
-        run: |
-          cd basebin/systemhook
-          make
-          cd -
+          cd basebin/jailbreakd && make && cd -
+          cd basebin/jbctl && make && cd -
+          cd basebin/jbinit && make && cd -
+          cd basebin/launchdhook && make && cd -
+          cd basebin/systemhook && make && cd -
 
       - name: Build and Archive Xcode Project
         run: |
