@@ -21,21 +21,13 @@ jobs:
 
       - name: Build Dependencies
         run: |
-          if [ -d "basebin/jailbreakd" ]; then
-            cd basebin/jailbreakd && make && cd -
-          fi
-          if [ -d "basebin/jbctl" ]; then
-            cd basebin/jbctl && make && cd -
-          fi
-          if [ -d "basebin/jbinit" ]; then
-            cd basebin/jbinit && make && cd -
-          fi
-          if [ -d "basebin/launchdhook" ]; then
-            cd basebin/launchdhook && make && cd -
-          fi
-          if [ -d "basebin/systemhook" ]; then
-            cd basebin/systemhook && make && cd -
-          fi
+          # Set TRUSTCACHEVERSION to 2 for iOS 16.2
+          TRUSTCACHEVERSION=2
+
+          # Run make in subdirectories of basebin/
+          for dir in basebin/*/; do
+            (cd "$dir" && make)
+          done
 
       - name: Build and Archive Xcode Project
         run: |
