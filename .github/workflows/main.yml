@@ -26,7 +26,12 @@ jobs:
 
           # Run make in subdirectories of basebin/
           for dir in basebin/*/; do
-            (cd "$dir" && make)
+            if [ -f "$dir/Makefile" ]; then
+              echo "Building in directory: $dir"
+              (cd "$dir" && make)
+            else
+              echo "No Makefile found in directory: $dir. Skipping."
+            fi
           done
 
       - name: Build and Archive Xcode Project
